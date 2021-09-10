@@ -4,7 +4,8 @@
 /data/data.json
 
 /dst
-!/dst/_assets
+!/dst/_assets/js
+!/dst/_assets/css
 
 main
 
