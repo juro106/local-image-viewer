@@ -18,25 +18,19 @@ const loadAllCallback = (elems, callback, loading) => {
 
 const init = () => {
   // data
-  const v = data[dirName].volumes[vol];
-  // mode
-  const combined = v.combined;
-  const reverse = v.reverse;
-  const vertical = v.vertical;
-  let single = combined ? true : false;
+  const { combined, reverse, vertical, toc, count: imgLen, ext } = data[dirName].volumes[vol];
   // setting
-  const toc = v.toc;
-  const imgLen = v.count;
   const tocHeight = '90vh';
   const singleLimitWidth = 1100;
+  let single = combined ? true : false;
   let amount;
   let minCount;
   let maxCount;
 
   // 画像の配列を取得 & preload
-  const images = [...Array(v.count)].map((_, i) => {
-    let num = ('000' + i).slice(-3);
-    let url = `${basePath}/${dirName}/images/${vol}/${num}${v.ext}`;
+  const images = [...Array(imgLen)].map((_, i) => {
+    const num = ('000' + i).slice(-3);
+    const url = `${basePath}/${dirName}/images/${vol}/${num}${ext}`;
     return url;
   });
   const imgArray = images.map(url => {

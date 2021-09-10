@@ -12,6 +12,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# /dst は基本無視。/dst/_assetsだけは監視したい
+# /dst/* としないと反映されない
 /dst/*
 !/dst/_assets
 # !/dst/_assets/js

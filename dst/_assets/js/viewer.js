@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const firstView = () => {
     insertFirstImagePromise().then((image) => {
-      // ImageBox.innerHTML = image[0] + image[1];
+      ImageBox.innerHTML = image[0] + image[1];
       init();
     });
   }
