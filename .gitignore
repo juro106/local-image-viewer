@@ -2,10 +2,11 @@
 
 /data/node_modules
 /data/data.json
+/data/*.json
 
 /dst
-!/dst/_assets/js
-!/dst/_assets/css
+!/dst/_assets/js/*
+!/dst/_assets/css/*
 
 main
 
