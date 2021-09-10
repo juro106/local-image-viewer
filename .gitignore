@@ -13,6 +13,9 @@ yarn-debug.log*
 yarn-error.log*
 
 /dst
+!/dst/_assets/
+!/dst/_assets/js
+!/dst/_assets/css
 !/dst/_assets/js/*.js
 !/dst/_assets/css/*.css
 
