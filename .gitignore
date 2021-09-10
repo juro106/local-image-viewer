@@ -3,9 +3,8 @@
 /data/node_modules
 /data/data.json
 
-# !/dst/_assets/*
-
-/dst/*
+/dst
+!/dst/_assets
 
 main
 
