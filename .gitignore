@@ -12,13 +12,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/dst
-!/dst/_assets/
-!/dst/_assets/js
-!/dst/_assets/css
-!/dst/_assets/js/*.js
-!/dst/_assets/css/*.css
-
+/dst/*
+!/dst/_assets
+# !/dst/_assets/js
+# !/dst/_assets/css
+# !/dst/_assets/js/*.js
+# !/dst/_assets/css/*.css
+#
 /data/node_modules
 /data/data.json
 /data/works.json
