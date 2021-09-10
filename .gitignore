@@ -1,8 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 /dst/*
-!/dst/_assets/js
-!/dst/_assets/css
+!/dst/_assets/*
 
 
 /data/node_modules
