@@ -1,14 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-*
+/data/node_modules
+/data/data.json
+
 !/dst/_assets/*
-!main.go
-!go.mod
 
 /dst/*
 
-/data/node_modules
-/data/data.json
 main
 
 .env
