@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-/dst/*
+/dst
 !/dst/_assets/js/*.js
 !/dst/_assets/css/*.css
 
