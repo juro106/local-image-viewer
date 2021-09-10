@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<title>Awesome Manga Viewer</title>
+    <link rel="icon" href="{{ .BasePath }}/favicon.png" id='favicon'>
+    <link rel="stylesheet" href="./_assets/css/style.css">
+</head>
+<body>
+    <h1 id='page-title'>Awesome Manga Viewer</h1>
+    {{- if .Works -}}
+    <ul id='works-list'>
+        {{ range $i, $v := .Works }}
+        <li class='works-item'>
+            <a class='works-item-link' href="./{{- $v.Url -}}/index.html">{{- $v.Title -}}</a>
+        </li>
+        {{- end -}}
+    </ul>
+    {{- end -}}
+</body>
+</html>
+

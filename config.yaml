@@ -1,0 +1,14 @@
+dst: 'dst/'
+css: 'css/'
+js: 'js/'
+# data: 'data/'
+# img: 'assets/img/'
+# layouts: '_layouts'
+# watch: ["./_posts", "./_pages", "./_tags", "_layouts", "./_assets/css", "./_assets/js", "./_assets/img"]
+# includes: ''
+# permalink: ''
+# exclude: ['']
+# host: 'localhost'
+# port: 9898
+# markdown_ext: '.md'
+
