@@ -180,15 +180,14 @@ const init = () => {
     }
   }
   setUp();
-
   // page transition
   const increment = (n) => c.count < maxCount && (c.count = Number(c.count) + n);
   const decrement = (n) => c.count >= minCount && (c.count = Number(c.count) - n);
   const directSet = (n) => c.count = n;
   // +1ページ
-  const plusOne = () => c.count < maxCount && increment(1);
+  const plusOne = () => increment(1);
   // -1ページ
-  const minusOne = () => c.count >= minCount && decrement(1);
+  const minusOne = () => decrement(1);
   // 次のページへ
   const goNext = () => reverse ? decrement(amount) : increment(amount);
   // 前のページへ
@@ -204,9 +203,9 @@ const init = () => {
   // 章ごとのジャンプ移動
   const goChapterNum = (n) => toc && n <= toc.length && directSet(toc[n - 1].p); // v.toc[n - 1].p は not defined になる
   // ◀クリックで次のページへ進む
-  arrowLeft.addEventListener('click', () => goNext());
+  arrowLeft.addEventListener('click', goNext, false);
   // ▶クリックで前のページへ戻る
-  arrowRight.addEventListener('click', () => goPrevious());
+  arrowRight.addEventListener('click', goPrevious, false);
   // マウスホイールで前後ページ移動
   window.addEventListener("mousewheel", (e) => {
     if (vertical) return;

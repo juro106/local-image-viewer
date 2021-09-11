@@ -20,12 +20,12 @@ const keyBindings = (a) => {
       case "KeyL": // l
       case "KeyF": // f
       case "ArrowRight": // right →
-        reverse ? goNext() : goPrevious();
+        goPrevious();
         return;
       case "KeyH": // h
       case "ArrowLeft": // left ←
       case "KeyS": // s
-        reverse ? goPrevious() : goNext();
+        goNext();
         return;
       case "KeyW": // w
       case "KeyN": // n
