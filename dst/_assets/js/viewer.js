@@ -22,26 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ImageBox = vertical ? `<div id='imageVerticalBox'></div>` : `<div id='imageBox'></div>`;
 
-  // 最初に表示する2枚を先に読み込んでおく。初期表示がなめらかになる
-  const insertFirstImagePromise = () => {
-    return new Promise(resolve => {
-      const img0 = new Image();
-      const img1 = new Image();
-      img0.src = `${basePath}/${dirName}/images/${vol}/000${ext}`;
-      img1.src = `${basePath}/${dirName}/images/${vol}/001${ext}`;
-      const resolveFunc = () => {
-        resolve([img0, img1]);
-      }
-      loadAllCallback([img0, img1], resolveFunc, false);
-    });
-  }
-  const firstView = () => {
-    insertFirstImagePromise().then((image) => {
-      ImageBox.innerHTML = image[0] + image[1]
-      init()
-    });
-  }
   root.innerHTML = Header + ImageBox + ChapterListBox + Controller;
-  firstView();
+
+  // 最初に表示する2枚を先に読み込んでおく。初期表示がなめらかになる
+  new Promise(resolve => {
+    const img0 = new Image();
+    const img1 = new Image();
+    let load = 0;
+    [img0, img1].forEach(e => {
+      e.onload = () => {
+        load += 1;
+        load === 2 && resolve([img0, img1])
+      }
+    });
+    img0.src = `${basePath}/${dirName}/images/${vol}/000${ext}`;
+    img1.src = `${basePath}/${dirName}/images/${vol}/001${ext}`;
+  }).then(image => {
+    ImageBox.innerHTML = image[0] + image[1]
+    init()
+  });
 });
 
