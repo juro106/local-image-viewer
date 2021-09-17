@@ -1,19 +1,16 @@
 'use strict';
 
 // store
-const myCreateStore = (reducer) => {
+const createStore = (reducer) => {
   let state;
   let listeners = [];
   // getState はただ state を返すだけ
   const getState = () => state;
-
-  // dispatch. reducer を呼んで state を更新する
-  // subscribe で登録した処理を実行する
+  // dispatch. reducer を呼んで state を更新する. subscribe で登録した処理を実行する
   const dispatch = (action) => {
     state = reducer(state, action);
     listeners.forEach(listener => listener());
   }
-
   // subscribe で dispatch時に呼ぶ処理を登録
   const subscribe = (listener) => {
     listeners.push(listener);
@@ -35,7 +32,7 @@ const setMaxCount = (maxCount) => ({ type: 'SET_MAX_COUNT', payload: { maxCount 
 const setSingle = (single) => ({ type: 'SET_SINGLE', payload: { single } });
 const setCombined = (combined) => ({ type: 'SET_COMBINED', payload: { combined } });
 const setReverse = (reverse) => ({ type: 'SET_REVERSE', payload: { reverse } });
-const initState = (amount, minCount, imgLength, maxCount, single, combined, reverse) => ({ type: 'INIT_STATE', payload: { amount, minCount, imgLength, maxCount, single, combined, reverse } });
+const initState = (count, amount, minCount, maxCount, imgLength, single, combined, reverse) => ({ type: 'INIT_STATE', payload: { count, amount, minCount, maxCount, imgLength, single, combined, reverse } });
 const resetState = (amount, minCount, maxCount) => ({
   type: 'RESET_STATE',
   payload: { amount, minCount, maxCount }
@@ -45,8 +42,8 @@ const resetState = (amount, minCount, maxCount) => ({
 const initialState = {
   amount: 0,
   count: 0,
-  minCount: 0,
   maxCount: 0,
+  minCount: 0,
   imgLength: 0,
   combined: false,
   reverse: false,
@@ -61,20 +58,24 @@ const myReducer = (state = initialState, action) => {
         count: state.count + state.amount,
       };
     case 'DECREMENT':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         count: state.count - state.amount,
-      });
+      };
     case 'SET_COUNT':
       return {
-        ...state, count: state.count + action.payload.vari,
+        ...state,
+        count: state.count + action.payload.vari,
       };
     case 'CHANGE_COUNT':
       return {
-        ...state, count: state.count + action.payload.vari,
+        ...state,
+        count: state.count + action.payload.vari,
       };
     case 'SET_COUNT_DIRECT':
       return {
-        ...state, count: action.payload.vari,
+        ...state,
+        count: action.payload.vari,
       };
     case 'SET_AMOUNT':
       return {
@@ -99,10 +100,11 @@ const myReducer = (state = initialState, action) => {
     case 'INIT_STATE':
       return {
         ...state,
+        count: action.payload.count,
         amount: action.payload.amount,
         maxCount: action.payload.maxCount,
-        imgLength: action.payload.imgLength,
         minCount: action.payload.minCount,
+        imgLength: action.payload.imgLength,
         single: action.payload.single,
         combined: action.payload.combined,
         reverse: action.payload.reverse,
@@ -135,14 +137,14 @@ const goNext = () => {
   const amount = store.getState().amount;
   const reverse = store.getState().reverse;
   reverse ? decrement(amount) : increment(amount);
+  console.log(store.getState());
 }
 // 前のページへ
 const goPrevious = () => {
   const amount = store.getState().amount;
   const reverse = store.getState().reverse;
-  reverse ?  increment(amount) : decrement(amount);
+  reverse ? increment(amount) : decrement(-amount);
 }
-
 
 const plusOne = () => increment(1);
 const minusOne = () => decrement(-1);
@@ -184,7 +186,7 @@ const mouseWheel = (vertical) => {
 }
 // index ページへ戻る
 const goTopPage = (e) => {
-    e.preventDefault(); // ctrl + r など他のキーバインドは潰したくないので個別に指定
+  e.preventDefault(); // ctrl + r など他のキーバインドは潰したくないので個別に指定
   location.href = "./index.html";
 };
 
@@ -198,43 +200,86 @@ const toggleSingle = () => {
   store.dispatch(setMaxCount(currentSingle ? imgLength - 2 : imgLength - 1));
 }
 
-const store = myCreateStore(myReducer);
+const store = createStore(myReducer);
 
+const storeInit = () => {
+  const count = 0;
+  const combined = false;
+  const reverse = false;
+  const imgLength = 185;
+  const single = combined ? true : false;
+  const minCount = single ? 1 : 2;
+  const maxCount = single ? imgLength - 1 : imgLength - 2;
+  const amount = single ? 1 : 2;
+  // store 初期化
+  store.dispatch(initState(
+    count,
+    amount,
+    minCount,
+    maxCount,
+    imgLength,
+    reverse,
+    combined,
+    single,
+  ));
+
+  console.log(store.getState());
+}
+
+const setEventListener = () => {
+  Incre.addEventListener('click', () => goNext());
+  Decre.addEventListener('click', () => goPrevious());
+  Add10.addEventListener('click', () => go10());
+  Sub10.addEventListener('click', () => back10());
+  Mode.addEventListener('click', () => toggleSingle());
+};
+
+const setImages = (count, images) => {
+  const c1 = images[count]
+  const c2 = images[count + 1];
+  imageRight.src = c1;
+  imageLeft.src = c2;
+}
 
 // rendering
 document.addEventListener('DOMContentLoaded', () => {
-  /*
-   * 必要な引数
-   * single: boolean,
-   * minCount: 1 || 2,
-   * maxCount: imgArrayLength -1 || imgArrayLength - 2,
-   * num: number,
-  */
-  // let combined = false;
-  // let reverse = false;
-  // let imgLength = 196;
-  // let single = combined ? true : false;
-  // let minCount = single ? 1 : 2;
-  // let maxCount = single ? imgLength - 1 : imgLength - 2;
-  // let amount = single ? 1 : 2;
+  storeInit();
 
-  // store 初期化
-  // store.dispatch(initState(
-  //   amount,
-  //   minCount,
-  //   maxCount,
-  //   imgLength,
-  //   reverse,
-  //   combined,
-  //   single,
-  // ));
-  //
-  // const render = () => {
-  //   console.log(store.getState());
-  //   const count = store.getState().count;
-  //   StoreCount.innerText = count;
-  // }
-  // store.subscribe(render);
-  //
-  // render();
+  const basePath = `/media/kenichiro/ext-hdd/develop/manga/aot/images/33`;
+  const images = [...Array(store.getState().imgLength)].map((_, i) => {
+    const num = ('000' + i).slice(-3);
+    return `${basePath}/${num}.jpg`;
+  });
+  const imgArray = images.map(url => {
+    const img = document.createElement("img");
+    img.src = url;
+    return img;
+  });
+
+  const Display = `<h2 id="Display">0</h2>`;
+  const PageTitle = `<h1>クロージャ＆カリー化</h1>`;
+  const Incre = `<button id='Incre'>+1</button>`;
+  const Add10 = `<button id='Add10'>+10</button>`;
+  const Decre = `<button id='Decre'>-1</button>`;
+  const Sub10 = `<button id='Sub10'>-10</button>`;
+  const Mode = `<button id='Mode'>mode</button>`;
+  const imageBox = `
+    <div id='imageBox' style="display:flex;width:100%;">
+      <img id='imageLeft' src='' style="display:block;width:50%;"/>
+      <img id='imageRight' src='' style="display:block;width:50%;" />
+    </div>`;
+  root.innerHTML = PageTitle + Display + Incre + Add10 + Decre + Sub10 + Mode + imageBox;
+  setEventListener();
+
+  const render = () => {
+    const count = store.getState().count;
+    document.getElementById('Display').innerText = count;
+    setImages(count, images);
+  }
+
+  store.subscribe(render);
+
+  render();
 });
+
+

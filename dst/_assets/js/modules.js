@@ -192,13 +192,13 @@ const init = () => {
   // 前のページへ
   const goPrevious = () => reverse ? increment(amount) : decrement(amount);
   // 最初のページ=へ
-  const goStart = () => c.count > 0 && directSet(0);
+  const goStart = () => directSet(0);
   // 最後のページへ
   const goEnd = () => directSet(maxCount);
   // +10ページ
-  const add10 = () => imgLen - c.count < 9 ? c.count = imgLen - Number(c.count) : increment(10);
+  const add10 = () => maxCount - c.count < 9 ? increment(maxCount - Number(c.count)) : increment(10);
   // -10ページ
-  const sub10 = () => c.count < 9 ? c.count = c.count : decrement(10);
+  const sub10 = () => c.count < 9 ? directSet(0) : decrement(10);
   // 章ごとのジャンプ移動
   const goChapterHead = n => toc && n <= toc.length && directSet(toc[n - 1].p); // v.toc[n - 1].p は not defined になる
   // ◀クリックで次のページへ進む

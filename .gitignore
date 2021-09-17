@@ -15,7 +15,8 @@ yarn-error.log*
 # /dst は基本無視。/dst/_assetsだけは監視したい
 # /dst/* としないと反映されない
 /dst/*
-!/dst/_assets
+!/dst/_assets/js/js/*
+!/dst/_assets/js/css/*
 # !/dst/_assets/js
 # !/dst/_assets/css
 # !/dst/_assets/js/*.js

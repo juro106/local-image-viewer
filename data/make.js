@@ -47,8 +47,8 @@ const main = () => {
   // const basePath = '/media/kenichiro/ext-hdd/develop/manga';
   const basePath = require('../.env');
   const dst = path.join(__dirname, `./data.json`);
-  const cpDst = path.join(__dirname, `../dst/_assets/js/data.js`);
-  const f = require(`${basePath}/static/data/index.js`);
+  const cpDst = path.join(__dirname, `../dst/_assets/data/index.js`);
+  // const f = require(`${basePath}/static/data/index.js`);
   const works = require('./works.json');
   // f.func();
   // console.log(works);
